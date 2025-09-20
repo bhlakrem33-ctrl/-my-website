@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazim Phone - متجر الهواتف الذكية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أساسيات التصميم */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* التصميم العام */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* قسم الترحيب */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80') no-repeat center center/cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+        
+        /* قسم المنتجات */
+        .products {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            font-size: 2.2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .order-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+        
+        .order-btn:hover {
+            background: #2980b9;
+        }
+        
+        /* نموذج الطلب */
+        .order-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close-modal {
+            float: left;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: #27ae60;
+        }
+        
+        /* صفحة الإدارة */
+        .admin-login {
+            padding: 4rem 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .admin-section {
+            padding: 4rem 0;
+            display: none;
+        }
+        
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .admin-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الرأس -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Nazim Phone</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#about">عن المتجر</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="#" onclick="showAdminLogin()">الإدارة</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- قسم الترحيب -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>مرحباً بكم في Nazim Phone</h1>
+                <p>اكتشف أحدث الهواتف الذكية بأفضل الأسعار. جودة عالية وضمان على جميع المنتجات.</p>
+                <a href="#products" class="btn">تصفح المنتجات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المنتجات -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">منتجاتنا</h2>
+            <div class="products-grid">
+                <!-- المنتج 1 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="هاتف سامسونج" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">سامسونج جالاكسي S22</h3>
+                        <p class="product-price">2,400 DA</p>
+                        <button class="order-btn" onclick="openOrderModal('سامسونج جالاكسي S22')">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 2 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=481&q=80" alt="هاتف ايفون" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">آيفون 13 برو</h3>
+                        <p class="product-price">3,800 DA</p>
+                        <button class="order-btn" onclick="openOrderModal('آيفون 13 برو')">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 3 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1621330396173-e41b1cafd17f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="هاتف شاومي" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">شاومي ريدمي نوت 11</h3>
+                        <p class="product-price">1,800 DA</p>
+                        <button class="order-btn" onclick="openOrderModal('شاومي ريدمي نوت 11')">اطلب الآن</button>
+                    </div>
+                </div>
+                
+                <!-- المنتج 4 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80" alt="هاتف هونر" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">هونر X7</h3>
+                        <p class="product-price">2,100 DA</p>
+                        <button class="order-btn" onclick="openOrderModal('هونر X7')">اطلب الآن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج الطلب -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeOrderModal()">&times;</span>
+            <h2>طلب منتج</h2>
+            <p id="selected-product">المنتج: سامسونج جالاكسي S22</p>
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="firstName">الاسم الأول</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">اللقب</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <button type="submit" class="submit-btn">تأكيد الطلب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- صفحة تسجيل الدخول للإدارة -->
+    <section class="admin-login" id="adminLogin">
+        <div class="container">
+            <h2 class="section-title">تسجيل الدخول للإدارة</h2>
+            <div class="admin-card">
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="adminCode">كود الدخول</label>
+                        <input type="password" id="adminCode" required>
+                    </div>
+                    <button type="submit" class="submit-btn">دخول</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- صفحة الإدارة -->
+    <section class="admin-section" id="adminSection">
+        <div class="container">
+            <h2 class="section-title">لوحة التحكم للمسؤول</h2>
+            
+            <div class="admin-actions">
+                <div class="admin-card">
+                    <h3>إضافة منتج جديد</h3>
+                    <form id="add-product-form">
+                        <div class="form-group">
+                            <label for="productName">اسم المنتج</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">السعر (DA)</label>
+                            <input type="number" id="productPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">رابط الصورة</label>
+                            <input type="url" id="productImage" required>
+                        </div>
+                        <button type="submit" class="submit-btn">إضافة المنتج</button>
+                    </form>
+                </div>
+                
+                <div class="admin-card">
+                    <h3>الطلبات الواردة</h3>
+                    <div id="orders-list">
+                        <p>لا توجد طلبات حتى الآن</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Nazim Phone</h3>
+                <p>متجرك المفضل لأحدث الهواتف الذكية وأفضل الأسعار</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p>© 2023 Nazim Phone. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // متغيرات التخزين
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            {
+                name: 'سامسونج جالاكسي S22',
+                price: '2,400 DA',
+                image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80'
+            },
+            {
+                name: 'آيفون 13 برو',
+                price: '3,800 DA',
+                image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=481&q=80'
+            },
+            {
+                name: 'شاومي ريدمي نوت 11',
+                price: '1,800 DA',
+                image: 'https://images.unsplash.com/photo-1621330396173-e41b1cafd17f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80'
+            },
+            {
+                name: 'هونر X7',
+                price: '2,100 DA',
+                image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80'
+            }
+        ];
+        
+        // حفظ البيانات في localStorage
+        function saveData() {
+            localStorage.setItem('orders', JSON.stringify(orders));
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+        
+        // فتح نموذج الطلب
+        function openOrderModal(productName) {
+            document.getElementById('selected-product').textContent = `المنتج: ${productName}`;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+        
+        // إغلاق نموذج الطلب
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+        
+        // عرض صفحة الإدارة
+        function showAdminLogin() {
+            document.getElementById('adminLogin').style.display = 'block';
+            window.scrollTo(0, document.getElementById('adminLogin').offsetTop);
+        }
+        
+        // إدارة نموذج الطلب
+        document.getElementById('order-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+            const product = document.getElementById('selected-product').textContent.replace('المنتج: ', '');
+            
+            // حفظ الطلب
+            orders.push({
+                firstName,
+                lastName,
+                phone,
+                product,
+                date: new Date().toLocaleString()
+            });
+            
+            saveData();
+            
+            alert('شكراً لك! تم استلام طلبك بنجاح وسنتصل بك قريباً.');
+            document.getElementById('order-form').reset();
+            closeOrderModal();
+            
+            // إذا كانت لوحة الإدارة مفتوحة، قم بتحديث الطلبات
+            if (document.getElementById('adminSection').style.display === 'block') {
+                displayOrders();
+            }
+        });
+        
+        // إدارة تسجيل الدخول للإدارة
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const adminCode = document.getElementById('adminCode').value;
+            
+            if (adminCode === 'akram123') {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+                displayOrders();
+            } else {
+                alert('كود الدخول غير صحيح!');
+            }
+        });
+        
+        // إدارة إضافة منتج جديد
+        document.getElementById('add-product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const productName = document.getElementById('productName').value;
+            const productPrice = document.getElementById('productPrice').value + ' DA';
+            const productImage = document.getElementById('productImage').value;
+            
+            // إضافة المنتج
+            products.push({
+                name: productName,
+                price: productPrice,
+                image: productImage
+            });
+            
+            saveData();
+            
+            alert('تمت إضافة المنتج بنجاح!');
+            document.getElementById('add-product-form').reset();
+            
+            // إعادة تحميل المنتجات في الصفحة
+            displayProducts();
+        });
+        
+        // عرض الطلبات في لوحة الإدارة
+        function displayOrders() {
+            const ordersList = document.getElementById('orders-list');
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p>لا توجد طلبات حتى الآن</p>';
+                return;
+            }
+            
+            ordersList.innerHTML = '';
+            
+            orders.forEach((order, index) => {
+                const orderElement = document.createElement('div');
+                orderElement.classList.add('order-item');
+                orderElement.innerHTML = `
+                    <h4>طلب #${index + 1}</h4>
+                    <p><strong>العميل:</strong> ${order.firstName} ${order.lastName}</p>
+                    <p><strong>الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>المنتج:</strong> ${order.product}</p>
+                    <p><strong>التاريخ:</strong> ${order.date}</p>
+                    <hr>
+                `;
+                ordersList.appendChild(orderElement);
+            });
+        }
+        
+        // عرض المنتجات في المتجر
+        function displayProducts() {
+            const productsGrid = document.querySelector('.products-grid');
+            productsGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">${product.price}</p>
+                        <button class="order-btn" onclick="openOrderModal('${product.name}')">اطلب الآن</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+        
+        // تهيئة الصفحة عند التحميل
+        window.onload = function() {
+            displayProducts();
+        };
+    </script>
+</body>
+</html>
